@@ -14,6 +14,27 @@ namespace AnyProp {
     export const Choice1 = AnyProp.create()
     export const Choice2 = AnyProp.create()
 }
+/**
+ * Cloud portraits:
+ * 
+ *   0 = happy
+ * 
+ *   1 = stormy
+ * 
+ *   2 = sad
+ * 
+ *   3 = surprised
+ * 
+ * Old man portraits:
+ * 
+ *   0 = neutral
+ * 
+ *   1 = disappointed
+ * 
+ *   2 = shocked
+ * 
+ *   3 = happy
+ */
 function happyEnding () {
     happy1 = createScript("Cloud", "That's right! Such a polite young man!", 0)
     happy2 = createScript("Old Man", "HaHaHa! What a flatterer. Take this flower as a token of my gratitude.", 3)
@@ -74,27 +95,6 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         printCurrentScript()
     }
 })
-/**
- * Cloud portraits:
- * 
- *   0 = happy
- * 
- *   1 = stormy
- * 
- *   2 = sad
- * 
- *   3 = surprised
- * 
- * Old man portraits:
- * 
- *   0 = neutral
- * 
- *   1 = disappointed
- * 
- *   2 = shocked
- * 
- *   3 = happy
- */
 function I_guess_that_makes_sense () {
     makesSenseFirst = createScript("Old Man", "Oh. I guess that makes sense! I wouldn't want to break any rules...", 0)
     makesSenseSecond = createScript("Old Man", "You don't get to be as old as me if you're one of those rule breakers!", 1)

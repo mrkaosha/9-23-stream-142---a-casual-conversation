@@ -59,8 +59,8 @@ function createConversation () {
     nextPage = createScript("Cloud", "I gots some rain I could give ya, but you gotta prove that you're not going to use it for evil. How's that sound?", 0)
     blockObject.setAnyProperty(startScript, AnyProp.NextPage, nextPage)
     blockObject.setStringArrayProperty(nextPage, StrArrayProp.Choices, ["I guess that makes sense", "NONE OF YOUR GAMES CLOUD"])
-    blockObject.setAnyProperty(nextPage, AnyProp.Choice1, I_guess_that_makes_sense())
-    blockObject.setAnyProperty(nextPage, AnyProp.Choice2, noneOfYourGamesCloud())
+    blockObject.setAnyProperty(nextPage, AnyProp.Choice1, 0)
+    blockObject.setAnyProperty(nextPage, AnyProp.Choice2, 0)
     currentScript = startScript
 }
 function printScript (name: string, text: string, portrait: number) {
@@ -95,36 +95,13 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         printCurrentScript()
     }
 })
-function I_guess_that_makes_sense () {
-    makesSenseFirst = createScript("Old Man", "Oh. I guess that makes sense! I wouldn't want to break any rules...", 0)
-    makesSenseSecond = createScript("Old Man", "You don't get to be as old as me if you're one of those rule breakers!", 1)
-    makesSenseThird = createScript("Cloud", "Hmmm... Maybe an essay? Does 5 pages sound enough? Please do try to be concise.", 0)
-    makesSenseFourth = createScript("Old Man", "Huh, 5 pages? Seems a little steep. I'm just trying to water my garden here", 1)
-    makesSenseFifth = createScript("Cloud", "OH! I didn't realize! You only want a garden's worth?", 3)
-    blockObject.setAnyProperty(makesSenseFirst, AnyProp.NextPage, makesSenseSecond)
-    blockObject.setAnyProperty(makesSenseSecond, AnyProp.NextPage, makesSenseThird)
-    blockObject.setAnyProperty(makesSenseThird, AnyProp.NextPage, makesSenseFourth)
-    blockObject.setAnyProperty(makesSenseFourth, AnyProp.NextPage, makesSenseFifth)
-    blockObject.setStringArrayProperty(makesSenseFifth, StrArrayProp.Choices, ["Of course!", "Duh!"])
-    blockObject.setAnyProperty(makesSenseFifth, AnyProp.Choice1, finalChoice())
-    blockObject.setAnyProperty(makesSenseFifth, AnyProp.Choice2, finalChoice())
-    return makesSenseFirst
-}
-function lightningEnding () {
-    lightning1 = createScript("Cloud", "Alright, wise guy", 1)
-    lightning2 = createScript("Old Man", "AHAHAHAHAHAHAAHAHAHHA!!!!!!!!!!", 4)
-    lightning3 = createScript("Cloud", "No rain requests today, I guess!", 0)
-    blockObject.setAnyProperty(lightning1, AnyProp.NextPage, lightning2)
-    blockObject.setAnyProperty(lightning2, AnyProp.NextPage, lightning3)
-    return lightning1
-}
 function finalChoice () {
     FinalChoice1 = createScript("Old Man", "Well, I just need enough water for this garden here", 0)
     FinalChoice2 = createScript("Cloud", "I can make that happen! What's the magic word?", 0)
     blockObject.setAnyProperty(FinalChoice1, AnyProp.NextPage, FinalChoice2)
     blockObject.setStringArrayProperty(FinalChoice2, StrArrayProp.Choices, ["Please!", "Abracadabra!"])
     blockObject.setAnyProperty(FinalChoice2, AnyProp.Choice1, happyEnding())
-    blockObject.setAnyProperty(FinalChoice2, AnyProp.Choice2, lightningEnding())
+    blockObject.setAnyProperty(FinalChoice2, AnyProp.Choice2, 0)
     return FinalChoice1
 }
 function updateChoices () {
@@ -173,52 +150,10 @@ function createScript (characterName: string, text: string, portrait: number) {
     blockObject.setNumberProperty(newScript, NumProp.Portrait, portrait)
     return newScript
 }
-function livesAreAtStake () {
-    lives1 = createScript("Old Man", "LIVES ARE AT STAKE! I AM RESPONSIBLE FOR THESE PLANTS AND THEIR WATER INTAKE!!!", 2)
-    lives2 = createScript("Cloud", "Hey now! I said I was sorry! I don't make the cloud rules! Our governing body does that", 1)
-    blockObject.setAnyProperty(lives1, AnyProp.NextPage, lives2)
-    blockObject.setStringArrayProperty(lives2, StrArrayProp.Choices, ["Makes sense...", "I'm sorry..."])
-    blockObject.setAnyProperty(lives2, AnyProp.Choice1, finalChoice())
-    blockObject.setAnyProperty(lives2, AnyProp.Choice2, finalChoice())
-    return lives1
-}
-function its_okay () {
-    itsOkayFirst = createScript("Old Man", "Ahhh, shucks.. It's okay! I'm sorry I yelled. We've all been there.", 0)
-    itsOkaySecond = createScript("Cloud", "You mean you were a cloud on its first day once?", 0)
-    itsOkayThird = createScript("Old Man", "No. That's ridiculous. I'm an old man, and therefore cannot fly or create lightning.", 1)
-    blockObject.setAnyProperty(itsOkayFirst, AnyProp.NextPage, itsOkaySecond)
-    blockObject.setAnyProperty(itsOkaySecond, AnyProp.NextPage, itsOkayThird)
-    blockObject.setAnyProperty(itsOkayThird, AnyProp.NextPage, I_guess_that_makes_sense())
-    return itsOkayFirst
-}
-function noneOfYourGamesCloud () {
-    firstPage = createScript("Old Man", "NONE OF YOUR GAMES CLOUD! You will rain as you have done before!", 2)
-    secondPage = createScript("Cloud", "Oh, no, I'm sorry... It's my first day. The other clouds made this job seem so easy...", 2)
-    blockObject.setAnyProperty(firstPage, AnyProp.NextPage, secondPage)
-    blockObject.setStringArrayProperty(secondPage, StrArrayProp.Choices, ["It's okay!", "LIVES ARE AT STAKE!!!"])
-    blockObject.setAnyProperty(secondPage, AnyProp.Choice1, its_okay())
-    blockObject.setAnyProperty(secondPage, AnyProp.Choice2, livesAreAtStake())
-    return firstPage
-}
-let secondPage: blockObject.BlockObject = null
-let firstPage: blockObject.BlockObject = null
-let itsOkayThird: blockObject.BlockObject = null
-let itsOkaySecond: blockObject.BlockObject = null
-let itsOkayFirst: blockObject.BlockObject = null
-let lives2: blockObject.BlockObject = null
-let lives1: blockObject.BlockObject = null
 let newScript: blockObject.BlockObject = null
 let printingStuff = false
 let FinalChoice2: blockObject.BlockObject = null
 let FinalChoice1: blockObject.BlockObject = null
-let lightning3: blockObject.BlockObject = null
-let lightning2: blockObject.BlockObject = null
-let lightning1: blockObject.BlockObject = null
-let makesSenseFifth: blockObject.BlockObject = null
-let makesSenseFourth: blockObject.BlockObject = null
-let makesSenseThird: blockObject.BlockObject = null
-let makesSenseSecond: blockObject.BlockObject = null
-let makesSenseFirst: blockObject.BlockObject = null
 let makingChoice = false
 let currentScript: blockObject.BlockObject = null
 let nextPage: blockObject.BlockObject = null
